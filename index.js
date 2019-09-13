@@ -70,4 +70,17 @@ app.put('api/movies/:id', (req, res) => {
       res.sendStatus(200);
     }
   });
-})
+});
+
+app.delete('/api/movies/:id', (req, res) => {
+  const idMovies = req.params.id;
+  connection.query('DELETE FROM movies WHERE id = ?', [idMovies], err =>{
+    if (err) {
+      console.log(err);
+      res.status(500).send('Eroor deleting a movie');
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
