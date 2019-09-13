@@ -52,3 +52,22 @@ app.post('/api/movies', (req, res) => {
     }
   });
 });
+
+// the id is put as a parameter of the route
+app.put('api/movies/:id', (req, res) => { 
+  const idMovies = req.params.id;
+  // data stored in req.body
+  const formData = req.body;
+
+  // connection to the database, and insertion of the movies
+  connection.query('UPDATE movies SET ? WHERE id = ?', [formData, idMovies], err => {
+    if (err) {
+      // If an error has occurred, then the user is informed of the error
+       console.log(err);
+      res.status(500).send("Error editing an movie");
+    } else {
+      // If everything went well, we send a status "ok".
+      res.sendStatus(200);
+    }
+  });
+})
